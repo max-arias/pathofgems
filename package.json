@@ -1,0 +1,26 @@
+{
+  "name": "pathofgems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "npx snowpack",
+    "dev": "servor --reload",
+    "babel_watch": "babel src --out-dir lib --watch",
+    "live": "live-server"
+  },
+  "author": "Maximiliano Arias",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "react": "npm:@reactesm/react",
+    "react-dom": "npm:@reactesm/react-dom",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "snowpack": "^1.6.0"
+  }
+}
