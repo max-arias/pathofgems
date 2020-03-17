@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const App = () => <h1>Hey world!</h1>
+import Main from './page/main.js'
+
+const App = () => <Main />
 
 ReactDOM.render(<App />, document.getElementById('app'))

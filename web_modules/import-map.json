@@ -1,7 +1,7 @@
 {
   "imports": {
+    "pako-es": "./pako-es.js",
     "react": "./react.js",
-    "react-dom": "./react-dom.js",
-    "styled-components": "./styled-components.js"
+    "react-dom": "./react-dom.js"
   }
 }

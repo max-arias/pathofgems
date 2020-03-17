@@ -15,9 +15,10 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
+    "pako-es": "ohze/pako",
     "react": "npm:@reactesm/react",
     "react-dom": "npm:@reactesm/react-dom",
-    "styled-components": "^5.0.1"
+    "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
     "live-server": "^1.2.1",
