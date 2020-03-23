@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "prepare": "npx snowpack",
-    "dev": "servor --reload",
+    "dev": "concurrently \"npm run babel_watch\" \"servor --reload\"",
     "babel_watch": "babel src --out-dir lib --watch",
-    "live": "live-server"
+    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}"
   },
   "author": "Maximiliano Arias",
   "license": "ISC",
@@ -21,7 +21,9 @@
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
-    "live-server": "^1.2.1",
+    "concurrently": "^5.1.0",
+    "prettier": "2.0.1",
+    "servor": "^3.2.0",
     "snowpack": "^1.6.0"
   }
 }
