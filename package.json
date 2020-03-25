@@ -7,7 +7,7 @@
     "prepare": "npx snowpack",
     "dev": "concurrently \"npm run babel_watch\" \"servor --reload\"",
     "babel_watch": "babel src --out-dir lib --watch",
-    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}"
+    "prettier": "prettier --write ."
   },
   "author": "Maximiliano Arias",
   "license": "ISC",
@@ -17,7 +17,10 @@
     "@babel/preset-react": "^7.8.3",
     "pako-es": "ohze/pako",
     "react": "npm:@reactesm/react",
+    "react-async": "^10.0.0",
     "react-dom": "npm:@reactesm/react-dom",
+    "react-vertical-timeline-component": "^2.5.0",
+    "styled-components": "^5.0.1",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {

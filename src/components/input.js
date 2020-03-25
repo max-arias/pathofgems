@@ -1,30 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from 'react'
 
-import decode from "../utils/decode.js";
-
-const corsProxy = "https://api.allorigins.win/get?url=";
-
-export default () => {
-  const [isFetching, setIsFetching] = useState(false);
-
+export default ({ onChange }) => {
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const urlValue = e.target.elements.url.value;
-
-    setIsFetching(true);
-    const urlToParse = new URL(urlValue);
-    const rawUrlToParse = `${urlToParse.origin}/raw${urlToParse.pathname}`;
-
-    const response = await fetch(
-      `${corsProxy}${encodeURIComponent(rawUrlToParse)}`
-    );
-    const data = await response.json();
-
-    const xml = decode(data.contents);
-    console.log(xml);
-
-    setIsFetching(false);
-  };
+    e.preventDefault()
+    onChange(e.target.elements.url.value)
+  }
 
   return (
     <div className="lg:col-start-2 flex items-center flex-col">
@@ -42,10 +22,10 @@ export default () => {
             type="submit"
             className="absolute right-0 top-0 mt-3 mr-4 bg-white"
           >
-            <i className={isFetching ? "gg-spinner" : "gg-enter"} />
+            <i className="gg-enter" />
           </button>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

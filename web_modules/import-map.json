@@ -2,6 +2,9 @@
   "imports": {
     "pako-es": "./pako-es.js",
     "react": "./react.js",
-    "react-dom": "./react-dom.js"
+    "react-async": "./react-async.js",
+    "react-dom": "./react-dom.js",
+    "react-vertical-timeline-component": "./react-vertical-timeline-component.js",
+    "styled-components": "./styled-components.js"
   }
 }
