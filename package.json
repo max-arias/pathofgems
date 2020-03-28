@@ -7,7 +7,8 @@
     "prepare": "npx snowpack",
     "dev": "concurrently \"npm run babel_watch\" \"servor --reload\"",
     "babel_watch": "babel src --out-dir lib --watch",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "build": "snowpack --optimize --clean"
   },
   "author": "Maximiliano Arias",
   "license": "ISC",
