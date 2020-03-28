@@ -34,11 +34,13 @@ export const decode = (data) => {
               id: g['@_gemId'],
               skillId: g['@_skillId'],
             }))
-          : [{
-              name: s.Gem['@_nameSpec'],
-              id: s.Gem['@_gemId'],
-              skillId: s.Gem['@_skillId'],
-            }]
+          : [
+              {
+                name: s.Gem['@_nameSpec'],
+                id: s.Gem['@_gemId'],
+                skillId: s.Gem['@_skillId'],
+              },
+            ]
 
         return {
           name: s['@_label'],
@@ -56,17 +58,20 @@ export const decode = (data) => {
 const findVendorReward = (gem, vendorData, questData, buildClass) => {
   const reward = []
 
-  Object.keys(vendorData).map(key => {
+  Object.keys(vendorData).map((key) => {
     if (vendorData[key].rewards[gem.id]) {
       // If the item is a reward for our class
-      if (vendorData[key].rewards[gem.id] && vendorData[key].rewards[gem.id].classes.includes(buildClass)) {
+      if (
+        vendorData[key].rewards[gem.id] &&
+        vendorData[key].rewards[gem.id].classes.includes(buildClass)
+      ) {
         const questId = vendorData[key].rewards[gem.id].quest_id
 
         // Push the act number, quest name and vendor name
         reward.push({
           act: vendorData[key].act,
           vendorName: vendorData[key].name,
-          ...(questData[questId] && { questName: questData[questId].name })
+          ...(questData[questId] && { questName: questData[questId].name }),
         })
       }
     }
@@ -82,10 +87,13 @@ const findVendorReward = (gem, vendorData, questData, buildClass) => {
 const findQuestReward = (gem, questData, buildClass) => {
   const reward = []
 
-  Object.keys(questData).map(key => {
+  Object.keys(questData).map((key) => {
     if (questData[key].rewards[gem.id]) {
       // If the item is a reward for our class
-      if (questData[key].rewards[gem.id] && questData[key].rewards[gem.id].classes.includes(buildClass)) {
+      if (
+        questData[key].rewards[gem.id] &&
+        questData[key].rewards[gem.id].classes.includes(buildClass)
+      ) {
         reward.push({ act: questData[key].act, questName: questData[key].name })
       }
     }
@@ -98,7 +106,12 @@ const findQuestReward = (gem, questData, buildClass) => {
   return reward
 }
 
-export const hydrateBuildData = (decodedBuildData, gemData, vendorData, questData) => {
+export const hydrateBuildData = (
+  decodedBuildData,
+  gemData,
+  vendorData,
+  questData
+) => {
   const parsedData = {}
 
   const buildClass = decodedBuildData.build.className
@@ -111,19 +124,29 @@ export const hydrateBuildData = (decodedBuildData, gemData, vendorData, questDat
         const skillId = item.gems[j].skillId
 
         if (gemData[skillId]) {
-          const minRequiredLevel = gemData[skillId].per_level['1'].required_level
+          const minRequiredLevel =
+            gemData[skillId].per_level['1'].required_level
 
           if (!parsedData[minRequiredLevel]) {
             parsedData[minRequiredLevel] = []
           }
 
-          const questReward = findQuestReward(item.gems[j], questData, buildClass)
-          const vendorReward = findVendorReward(item.gems[j], vendorData, questData, buildClass)
+          const questReward = findQuestReward(
+            item.gems[j],
+            questData,
+            buildClass
+          )
+          const vendorReward = findVendorReward(
+            item.gems[j],
+            vendorData,
+            questData,
+            buildClass
+          )
 
           const out = {
             ...item.gems[j],
-            ...questReward && { questReward },
-            ...vendorReward && { vendorReward },
+            ...(questReward && { questReward }),
+            ...(vendorReward && { vendorReward }),
           }
 
           parsedData[minRequiredLevel].push(out)
@@ -132,5 +155,5 @@ export const hydrateBuildData = (decodedBuildData, gemData, vendorData, questDat
     }
   }
 
-  return parsedData;
+  return parsedData
 }

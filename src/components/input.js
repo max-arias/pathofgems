@@ -19,13 +19,20 @@ export default ({ onChange }) => {
             name="url"
             className="h-10 w-full border rounded-lg py-2 px-4 block appearance-none leading-normal"
             pattern="https?:\/\/pastebin.com\/[a-zA-Z0-9]{8}"
-            style={{ backgroundColor: '#0c0b0b', borderColor: '#141414', color: '#A38D6D' }}
+            style={{
+              backgroundColor: '#0c0b0b',
+              borderColor: '#141414',
+              color: '#A38D6D',
+            }}
           />
           <button
             type="submit"
             className="absolute right-0 top-0 mt-3 mr-4 bg-white"
           >
-            <i className="gg-enter" style={{ color: '#A38D6D', backgroundColor: '#0c0b0b'}} />
+            <i
+              className="gg-enter"
+              style={{ color: '#A38D6D', backgroundColor: '#0c0b0b' }}
+            />
           </button>
         </form>
       </div>

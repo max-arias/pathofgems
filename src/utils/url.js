@@ -1,7 +1,7 @@
 import { corsProxyUrl } from './constants.js'
 
-export const githubRawUrl = url => {
-  if (!url) return false;
+export const githubRawUrl = (url) => {
+  if (!url) return false
 
   const urlToParse = new URL(url)
   const rawUrlToParse = `${urlToParse.origin}/raw${urlToParse.pathname}`
@@ -9,8 +9,8 @@ export const githubRawUrl = url => {
   return `${corsProxyUrl}${rawUrlToParse}`
 }
 
-export const corsifyUrl = url => {
-  if (!url) return false;
+export const corsifyUrl = (url) => {
+  if (!url) return false
 
   return `${corsProxyUrl}${url}`
 }

@@ -9,7 +9,7 @@ import TimelineList from '../components/timeline/list.js'
 export default () => {
   const [buildUrl, setBuildUrl] = useState(false)
 
-  const changeCallback = data => {
+  const changeCallback = (data) => {
     const corsUrl = githubRawUrl(data)
     setBuildUrl(corsUrl)
   }
