@@ -14,8 +14,6 @@ export default () => {
     setBuildUrl(corsUrl)
   }
 
-  // return <TimelineList />
-
   if (buildUrl) {
     return <TimelineContainer buildUrl={buildUrl} />
   }

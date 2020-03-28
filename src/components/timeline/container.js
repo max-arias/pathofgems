@@ -5,6 +5,8 @@ import { questRewardsUrl, vendorRewardsUrl, gemDataUrl } from '../../utils/const
 import { corsifyUrl } from '../../utils/url.js'
 import { decode, hydrateBuildData } from '../../utils/data.js'
 
+import TimelineList from './list.js'
+
 const loadData = async ({ url }) =>
   await fetch(url)
     .then(res => (res.ok ? res : Promise.reject(res)))
@@ -42,7 +44,7 @@ export default ({ buildUrl }) => {
 
       const parsedData = hydrateBuildData(decodedBuildData, parsedGemData, parsedVendorData, parsedQuestData)
 
-      return <em>{JSON.stringify(parsedData)}</em>
+      return <TimelineList data={parsedData} />
     } catch (err) {
       throw new Error(err)
     }

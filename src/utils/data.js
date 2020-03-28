@@ -60,13 +60,13 @@ const findVendorReward = (gem, vendorData, questData, buildClass) => {
     if (vendorData[key].rewards[gem.id]) {
       // If the item is a reward for our class
       if (vendorData[key].rewards[gem.id] && vendorData[key].rewards[gem.id].classes.includes(buildClass)) {
-        // const questId = vendorData[key].rewards[gem.id].quest_id
+        const questId = vendorData[key].rewards[gem.id].quest_id
 
         // Push the act number, quest name and vendor name
         reward.push({
           act: vendorData[key].act,
           vendorName: vendorData[key].name,
-          // questName: questData[questId].name
+          ...(questData[questId] && { questName: questData[questId].name })
         })
       }
     }
