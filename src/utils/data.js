@@ -1,5 +1,7 @@
 import pako from 'pako-es'
 
+import { corsProxyUrl } from './constants.js'
+
 export const decode = (data) => {
   try {
     // Parse PoB data
@@ -27,7 +29,7 @@ export const decode = (data) => {
         className: objStr.PathOfBuilding.Build['@_className'],
         ascendancyName: objStr.PathOfBuilding.Build['@_ascendClassName'],
       },
-      skills: objStr.PathOfBuilding.Skills.Skill.map((s) => {
+      skills: objStr.PathOfBuilding.Skills.Skill.filter(s => s['@_mainActiveSkill'] === 1).map((s) => {
         const gems = s.Gem.length
           ? s.Gem.map((g) => ({
               name: g['@_nameSpec'],
@@ -156,4 +158,12 @@ export const hydrateBuildData = (
   }
 
   return parsedData
+}
+
+export const store = (url, build, data) => {
+  const unCorsUrl = url.replace(corsProxyUrl, '').replace('raw/', '')
+  localStorage.setItem(unCorsUrl, JSON.stringify({
+    build: build.build,
+    data,
+  }));
 }
