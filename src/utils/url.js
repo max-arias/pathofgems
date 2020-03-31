@@ -19,7 +19,7 @@ export const getIssueReportURL = (buildUrl, error = null) => {
   let buildUrlFailing = null
   let issueBody = null
 
-  if (buildUrl){
+  if (buildUrl) {
     buildUrlFailing = buildUrl.replace(corsProxyUrl, '').replace('raw/', '')
     issueBody += `Build Url: [${buildUrlFailing}](${buildUrlFailing})`
   }
@@ -28,10 +28,10 @@ export const getIssueReportURL = (buildUrl, error = null) => {
     issueBody += error
   }
 
-  const newIssueURL = "https://github.com/max-arias/pathofgems/issues/new"
-  const issueTitle = "There was an issue processing the build URL"
+  const newIssueURL = 'https://github.com/max-arias/pathofgems/issues/new'
+  const issueTitle = 'There was an issue processing the build URL'
 
-  var enc = encodeURIComponent;
-  var queryString = `title=${enc(issueTitle)}&body=${enc(issueBody)}`;
-  return `${newIssueURL}?${queryString}`;
+  var enc = encodeURIComponent
+  var queryString = `title=${enc(issueTitle)}&body=${enc(issueBody)}`
+  return `${newIssueURL}?${queryString}`
 }

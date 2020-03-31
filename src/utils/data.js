@@ -29,18 +29,22 @@ export const decode = (data) => {
         className: objStr.PathOfBuilding.Build['@_className'],
         ascendancyName: objStr.PathOfBuilding.Build['@_ascendClassName'],
       },
-      skills: objStr.PathOfBuilding.Skills.Skill.filter(s => s['@_mainActiveSkill'] === 1).map((s) => {
+      skills: objStr.PathOfBuilding.Skills.Skill.filter(
+        (s) => s['@_mainActiveSkill'] === 1
+      ).map((s) => {
         const gems = s.Gem.length
           ? s.Gem.map((g) => ({
               name: g['@_nameSpec'],
               id: g['@_gemId'],
               skillId: g['@_skillId'],
+              checked: false,
             }))
           : [
               {
                 name: s.Gem['@_nameSpec'],
                 id: s.Gem['@_gemId'],
                 skillId: s.Gem['@_skillId'],
+                checked: false,
               },
             ]
 
@@ -162,8 +166,53 @@ export const hydrateBuildData = (
 
 export const store = (url, build, data) => {
   const unCorsUrl = url.replace(corsProxyUrl, '').replace('raw/', '')
-  localStorage.setItem(unCorsUrl, JSON.stringify({
-    build: build.build,
-    data,
-  }));
+  localStorage.setItem(
+    unCorsUrl,
+    JSON.stringify({
+      build: build.build,
+      data,
+    })
+  )
+}
+
+export const toggleGem = (url, data, skillId) => {
+  const unCorsUrl = url.replace(corsProxyUrl, '').replace('raw/', '')
+
+  const updatedData = Object.keys(data).reduce((acc, lvl) => {
+    const lvlData = data[lvl].map(skill => {
+      return {
+        ...skill,
+        checked: (skill.skillId === skillId) ? !skill.checked: skill.checked
+      }
+    })
+
+    return {
+      ...acc,
+      [lvl]: lvlData
+    }
+  }, {})
+
+  let localStorageData = localStorage.getItem(unCorsUrl)
+  localStorageData = JSON.parse(localStorageData)
+
+  localStorageData.data = updatedData
+
+  localStorage.setItem(unCorsUrl, JSON.stringify(localStorageData))
+  return updatedData
+}
+
+export const getStorageData = (url) => {
+  const unCorsUrl = url.replace(corsProxyUrl, '').replace('raw/', '')
+
+  const localStorageData = localStorage.getItem(unCorsUrl)
+  return JSON.parse(localStorageData)
+}
+
+export const previousBuilds = () => {
+  return Object.keys(localStorage).reduce((acc, item) => {
+    return {
+      ...acc,
+      [item]: JSON.parse(localStorage.getItem(item)),
+    }
+  }, {})
 }

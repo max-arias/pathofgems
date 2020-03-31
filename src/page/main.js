@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { githubRawUrl } from '../utils/url.js'
+import { previousBuilds, getStorageData } from '../utils/data.js'
 
 import Input from '../components/Input.js'
 import TimelineContainer from '../components/timeline/Container.js'
@@ -8,25 +9,29 @@ import PreviousBuild from '../components/PreviousBuild.js'
 
 export default () => {
   const [buildUrl, setBuildUrl] = useState(false)
+  const [ buildData, setBuildData] = useState(null)
 
-  const previousData = Object.keys(localStorage).reduce((acc, item) => {
-    return {
-      ...acc,
-      [item]: JSON.parse(localStorage.getItem(item))
-    }
-  }, {})
-
-  const changeCallback = (data) => {
+  const loadBuildCallback = (data) => {
     const corsUrl = githubRawUrl(data)
+    const storedData = getStorageData(corsUrl)
+
+    setBuildData(storedData.data)
     setBuildUrl(corsUrl)
   }
 
+  const changeCallback = data => {
+    const corsUrl = githubRawUrl(data);
+    setBuildUrl(corsUrl);
+  };
+
   if (buildUrl) {
-    return <TimelineContainer buildUrl={buildUrl} />
+    return <TimelineContainer buildUrl={buildUrl} buildData={buildData} />
   }
 
   const showPreviousBuilds = () => {
-    if (!previousData || !Object.keys(previousData).length) {
+    const previousBuildsData = previousBuilds()
+
+    if (!previousBuildsData || !Object.keys(previousBuildsData).length) {
       return null
     }
 
@@ -34,8 +39,12 @@ export default () => {
       <div className="flex flex-col mt-8">
         <h2 className="text-center text-2xl mb-4">Previous builds</h2>
         <div className="flex flex-row">
-          {Object.keys(previousData).map(key => (
-            <PreviousBuild url={key} build={previousData[key].build} loadBuild={changeCallback}/>
+          {Object.keys(previousBuildsData).map((key) => (
+            <PreviousBuild
+              url={key}
+              build={previousBuildsData[key].build}
+              loadBuild={loadBuildCallback}
+            />
           ))}
         </div>
       </div>

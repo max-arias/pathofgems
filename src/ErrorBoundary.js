@@ -17,17 +17,32 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.errorInfo) {
-      const errorStack = `${this.state.error && this.state.error.toString()}\r\n${this.state.errorInfo.componentStack}`
+      const errorStack = `${
+        this.state.error && this.state.error.toString()
+      }\r\n${this.state.errorInfo.componentStack}`
 
       return (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '5rem',
-          flexFlow: 'column',
-          alignItems: 'center'
-        }}>
-          <h1>There was an error processing the build, please leave a bug report by clicking: <a style={{textDecoration: 'underline'}} target="_blank" rel="noopener" href={getIssueReportURL(null, errorStack)}>Here</a></h1>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '5rem',
+            flexFlow: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h1>
+            There was an error processing the build, please leave a bug report
+            by clicking:{' '}
+            <a
+              style={{ textDecoration: 'underline' }}
+              target="_blank"
+              rel="noopener"
+              href={getIssueReportURL(null, errorStack)}
+            >
+              Here
+            </a>
+          </h1>
         </div>
       )
     }
