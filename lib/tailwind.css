@@ -14207,7 +14207,13 @@ video {
 }
 
 .vertical-timeline-element-content .vertical-timeline-element-date {
-  display: inline-block;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .vertical-timeline-element-content .vertical-timeline-element-date {
+    display: inline-block;
+  }
 }
 
 .vertical-timeline-element-content p {

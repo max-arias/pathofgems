@@ -10,9 +10,9 @@ export default ({ url, build, loadBuild }) => {
   }
 
   return (
-    <div className="flex w-1/2">
+    <div className="flex w-full md:w-auto lg:w-2/5 xl:w-auto mb-2 mr-4">
       <Avatar buildName={build.className} ascendancyName={build.ascendancyName} />
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center ml-2 lg:ml-0 w-3/5 xl:w-auto text-center xl:text-left">
         <span>
           {buildClass}
         </span>

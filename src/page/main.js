@@ -36,9 +36,9 @@ export default () => {
     }
 
     return (
-      <div className="flex flex-col mt-8">
+      <div className="flex flex-col mt-8 md:w-full">
         <h2 className="text-center text-2xl mb-4">Previous builds</h2>
-        <div className="flex flex-row">
+        <div className="flex flex-row flex-wrap md:text-center md:justify-center">
           {Object.keys(previousBuildsData).map((key) => (
             <PreviousBuild
               url={key}
@@ -53,14 +53,14 @@ export default () => {
 
   return (
     <div
-      className="grid lg:grid-cols-1_5_1 mt-24"
+      className="grid grid-cols-1 lg:grid-cols-1_5_1 mt-24 p-2"
       style={{ height: 'calc(100vh - 6rem)' }}
     >
       <div className="lg:col-start-2 flex items-center flex-col">
-        <div className="relative h-10 w-4/5 lg:w-2/4">
+        <div className="relative h-10 w-full md:w-4/5 lg:w-2/4">
           <Input onChange={changeCallback} />
-          {showPreviousBuilds()}
         </div>
+        {showPreviousBuilds()}
       </div>
     </div>
   )
