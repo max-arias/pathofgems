@@ -49,7 +49,7 @@ export const decode = (data) => {
                 id: s.Gem['@_gemId'],
                 skillId: s.Gem['@_skillId'],
                 checked: false,
-                slot: g['@_slot'] || '',
+                slot: s['@_slot'] || '',
                 skillLabel: s['@_label'] || ''
               },
             ]
