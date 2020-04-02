@@ -23,13 +23,15 @@ export const decode = (data) => {
       parseAttributeValue: true,
     })
 
+    const skills = Array.isArray(objStr.PathOfBuilding.Skills.Skill) ? objStr.PathOfBuilding.Skills.Skill : [objStr.PathOfBuilding.Skills.Skill]
+
     // Pull the data we need
     return {
       build: {
         className: objStr.PathOfBuilding.Build['@_className'],
         ascendancyName: objStr.PathOfBuilding.Build['@_ascendClassName'],
       },
-      skills: objStr.PathOfBuilding.Skills.Skill.filter(
+      skills: skills.filter(
         (s) => s['@_mainActiveSkill'] === 1 && !s['@_source']
       ).map((s) => {
         let gems = s.Gem.length
@@ -158,6 +160,7 @@ export const hydrateBuildData = (
 
             const out = {
               ...item.gems[j],
+              name: gemData[skillId].base_item.display_name,
               ...(questReward && { questReward }),
               ...(vendorReward && { vendorReward }),
             }

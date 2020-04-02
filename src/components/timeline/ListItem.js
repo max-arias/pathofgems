@@ -18,7 +18,7 @@ export default ({ gem, toggleGemChecked }) => {
           alt={gem.skillId}
           width="50"
         />
-        <h4>
+        <h4 className="ml-2">
           <a
             target="_blank"
             rel="noopener"
