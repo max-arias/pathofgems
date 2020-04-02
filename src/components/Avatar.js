@@ -111,4 +111,12 @@ const Avatar = styled.div`
   }
 `
 
-export default ({ buildClass }) => <Avatar className={buildClass} />
+export default ({ buildName, ascendancyName }) => {
+  let buildClass = ascendancyName
+
+  if(buildClass === 'None') {
+    buildClass = buildName
+  }
+
+  return <Avatar className={buildClass} />
+}

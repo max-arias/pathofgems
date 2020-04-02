@@ -30,14 +30,16 @@ export const decode = (data) => {
         ascendancyName: objStr.PathOfBuilding.Build['@_ascendClassName'],
       },
       skills: objStr.PathOfBuilding.Skills.Skill.filter(
-        (s) => s['@_mainActiveSkill'] === 1
+        (s) => s['@_mainActiveSkill'] === 1 && !s['@_source']
       ).map((s) => {
-        const gems = s.Gem.length
+        let gems = s.Gem.length
           ? s.Gem.map((g) => ({
               name: g['@_nameSpec'],
               id: g['@_gemId'],
               skillId: g['@_skillId'],
               checked: false,
+              skillSlot: s['@_slot'] || '',
+              skillLabel: s['@_label'] || ''
             }))
           : [
               {
@@ -45,6 +47,8 @@ export const decode = (data) => {
                 id: s.Gem['@_gemId'],
                 skillId: s.Gem['@_skillId'],
                 checked: false,
+                slot: g['@_slot'] || '',
+                skillLabel: s['@_label'] || ''
               },
             ]
 
@@ -130,32 +134,36 @@ export const hydrateBuildData = (
         const skillId = item.gems[j].skillId
 
         if (gemData[skillId]) {
-          const minRequiredLevel =
-            gemData[skillId].per_level['1'].required_level
+          let minRequiredLevel = '-'
+          if (gemData[skillId].per_level['1'] && gemData[skillId].per_level['1'].required_level) {
+            minRequiredLevel = gemData[skillId].per_level['1'].required_level
+          }
 
           if (!parsedData[minRequiredLevel]) {
             parsedData[minRequiredLevel] = []
           }
 
-          const questReward = findQuestReward(
-            item.gems[j],
-            questData,
-            buildClass
-          )
-          const vendorReward = findVendorReward(
-            item.gems[j],
-            vendorData,
-            questData,
-            buildClass
-          )
+          if (!parsedData[minRequiredLevel].find(e => e.skillId === skillId)) {
+            const questReward = findQuestReward(
+              item.gems[j],
+              questData,
+              buildClass
+            )
+            const vendorReward = findVendorReward(
+              item.gems[j],
+              vendorData,
+              questData,
+              buildClass
+            )
 
-          const out = {
-            ...item.gems[j],
-            ...(questReward && { questReward }),
-            ...(vendorReward && { vendorReward }),
+            const out = {
+              ...item.gems[j],
+              ...(questReward && { questReward }),
+              ...(vendorReward && { vendorReward }),
+            }
+
+            parsedData[minRequiredLevel].push(out)
           }
-
-          parsedData[minRequiredLevel].push(out)
         }
       }
     }
